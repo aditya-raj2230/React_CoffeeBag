@@ -13,6 +13,8 @@ function App() {
     <div className='h-screen w-screen bg-black' >
       <Wholesale/>
       <Product/>
+      <Product/>
+      <Product/>
     </div>
     </>
   )
