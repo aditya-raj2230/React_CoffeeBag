@@ -82,7 +82,7 @@ const Product = ({
               <img 
                 src={overlayImageUrl} 
                 alt="Overlay" 
-                className="w-[100vw] h-[100vw] object-contain -mt-72"
+                className="w-[120vw] h-[120vw] object-contain -mt-[clamp(23rem,100vw,28rem)]"
               />
             </div>
           </div>
