@@ -1,5 +1,4 @@
 import { memo, Suspense } from 'react';
-import answerLogo from '../assets/The Answer Logo.webp';
 import { Canvas } from '@react-three/fiber';
 import CoffeeBag, { CoffeeOBJ } from './Coffee OBJ';
 import { OrbitControls } from '@react-three/drei';
@@ -57,7 +56,8 @@ const Scene = memo(({ texturePath }) => (
 const Product = ({ 
   layout = 'left', 
   texturePath = '/Pack2.png',
-  overlayImageUrl = '/theanswer-doodlePNG2.png'
+  overlayImageUrl = '/theanswer-doodlePNG2.png',
+  logoUrl = answerLogo
 }) => {
   return (
     <div className="w-full min-h-screen bg-[#447783] flex justify-center items-center p-5">
@@ -66,7 +66,7 @@ const Product = ({
         <div className="bg-[#0a192f] p-6 w-1/2 flex flex-col items-center relative z-10">
           <div className="flex justify-center w-full mb-4">
             <img 
-              src={answerLogo} 
+              src={logoUrl} 
               alt="The Answer Logo" 
               className="max-w-[280px] w-full"
               loading="lazy"
