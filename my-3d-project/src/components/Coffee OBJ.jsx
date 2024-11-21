@@ -17,11 +17,11 @@ export function CoffeeOBJ(props) {
     const material = new THREE.MeshStandardMaterial({
       map: texture,
       side: THREE.DoubleSide,
-      metalness: 0.2,
-      roughness: 0.005,
-      envMapIntensity: 1.5,
-      emissive: new THREE.Color(0xffffff),
-      emissiveIntensity: 0.1,
+      metalness: 0,
+      roughness: 1,
+      envMapIntensity: 1.0,
+      emissive: new THREE.Color(0x000000),
+      emissiveIntensity: 0,
     })
 
     // Then load OBJ with the prepared material
