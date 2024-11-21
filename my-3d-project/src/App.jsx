@@ -138,10 +138,10 @@ function App() {
             <Wholesale/>
           </div>
           <div className='px-4 py-10 scroll-section'>
-            <Product layout='left' texturePath='/Kercha.png'/>
+            <Product layout='left' texturePath='/Kercha.png' overlayImageUrl='Ethiopia DoodlePNG.png'/>
           </div>
           <div className='px-4 py-10 scroll-section'>
-            <Product layout='right' texturePath='/Night Shift.png'/>
+            <Product layout='right' texturePath='/Night Shift.png' overlayImageUrl='/nightshift-doodle2.png'/>
           </div>
           <div className='px-4 pb-10 scroll-section'>
             <Product layout='left' texturePath='The Answer.png'/>

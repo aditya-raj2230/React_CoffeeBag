@@ -54,7 +54,11 @@ const Scene = memo(({ texturePath }) => (
   </>
 ));
 
-const Product = ({ layout = 'left', texturePath = '/Pack2.png' }) => {
+const Product = ({ 
+  layout = 'left', 
+  texturePath = '/Pack2.png',
+  overlayImageUrl = '/theanswer-doodlePNG2.png'
+}) => {
   return (
     <div className="w-full min-h-screen bg-[#447783] flex justify-center items-center p-5">
       <div className={`flex flex-row w-full gap-8 max-w-7xl ${layout === 'right' ? 'flex-row-reverse' : ''}`}>
@@ -73,6 +77,15 @@ const Product = ({ layout = 'left', texturePath = '/Pack2.png' }) => {
 
         {/* Canvas Section */}
         <div className="w-1/2 relative">
+          <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-3/4 h-3/4 z-20 group">
+            <div className="absolute inset-0 z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+              <img 
+                src={overlayImageUrl} 
+                alt="Overlay" 
+                className="w-[100vw] h-[100vw] object-contain -mt-72"
+              />
+            </div>
+          </div>
           <Canvas 
             camera={{ position: [0, 0, 22], fov: 45 }}
             dpr={[1, 2]}
