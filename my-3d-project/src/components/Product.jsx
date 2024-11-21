@@ -47,30 +47,29 @@ const Scene = memo(() => (
   </>
 ));
 
-const Product = () => {
+const Product = ({ layout = 'left' }) => {
   return (
     <div className="w-full min-h-screen bg-[#447783] flex justify-center items-center p-5">
-      <div className="flex flex-row w-full gap-8 max-w-7xl">
-        {/* Content Section - Left Side */}
-        <div className="bg-[#0a192f] p-8 w-1/2 flex flex-col items-center relative z-10">
-          <div className="flex justify-center w-full">
+      <div className={`flex flex-row w-full gap-8 max-w-7xl ${layout === 'right' ? 'flex-row-reverse' : ''}`}>
+        {/* Content Section */}
+        <div className="bg-[#0a192f] p-6 w-1/2 flex flex-col items-center relative z-10">
+          <div className="flex justify-center w-full mb-4">
             <img 
               src={answerLogo} 
               alt="The Answer Logo" 
-              className="max-w-[320px] w-full mb-2.5"
+              className="max-w-[280px] w-full"
               loading="lazy"
             />
           </div>
           <ProductInfo />
         </div>
 
-        {/* Canvas Section - Right Side */}
+        {/* Canvas Section */}
         <div className="w-1/2 relative">
           <Canvas 
             camera={{ position: [0, 0, 22], fov: 45 }}
-            frameloop="demand"
-            dpr={[1, 2]} // Optimize for device pixel ratio
-            performance={{ min: 0.5 }} // Add performance optimization
+            dpr={[1, 2]}
+            performance={{ min: 0.5 }}
           >
             <Scene />
           </Canvas>

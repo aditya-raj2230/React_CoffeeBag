@@ -43,8 +43,8 @@ export function CoffeeOBJ(props) {
     }
   }, [])
 
-  // Animation with useCallback for better performance
-  const rotationSpeed = 0.3 // Moved outside to prevent recreating each frame
+  // Animation with useFrame for better performance
+  const rotationSpeed = 1.0 // Increased from 0.2 for more noticeable rotation
   useFrame((state, delta) => {
     if (meshRef.current) {
       meshRef.current.rotation.y += delta * rotationSpeed
