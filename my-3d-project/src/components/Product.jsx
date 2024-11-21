@@ -1,8 +1,15 @@
-import { memo } from 'react';
+import { memo, Suspense } from 'react';
 import answerLogo from '../assets/The Answer Logo.webp';
 import { Canvas } from '@react-three/fiber';
-import CoffeeBag from './Coffee OBJ';
+import CoffeeBag, { CoffeeOBJ } from './Coffee OBJ';
 import { OrbitControls } from '@react-three/drei';
+
+// Add a loader component
+const Loader = memo(() => (
+  <div className="absolute inset-0 flex items-center justify-center">
+    <div className="w-8 h-8 border-4 border-[#e6e6e6] border-t-transparent rounded-full animate-spin"></div>
+  </div>
+));
 
 // Separate the product info into a memoized component
 const ProductInfo = memo(() => (
@@ -29,11 +36,11 @@ const ProductInfo = memo(() => (
 ));
 
 // Separate the 3D scene setup into its own component
-const Scene = memo(() => (
+const Scene = memo(({ texturePath }) => (
   <>
     <ambientLight intensity={0.5} />
     <directionalLight position={[10, 10, 5]} intensity={1} />
-    <CoffeeBag />
+    <CoffeeOBJ texturePath={texturePath}/>
     <OrbitControls 
       enableZoom={false}
       enablePan={false}
@@ -47,7 +54,7 @@ const Scene = memo(() => (
   </>
 ));
 
-const Product = ({ layout = 'left' }) => {
+const Product = ({ layout = 'left', texturePath = '/Pack2.png' }) => {
   return (
     <div className="w-full min-h-screen bg-[#447783] flex justify-center items-center p-5">
       <div className={`flex flex-row w-full gap-8 max-w-7xl ${layout === 'right' ? 'flex-row-reverse' : ''}`}>
@@ -71,7 +78,9 @@ const Product = ({ layout = 'left' }) => {
             dpr={[1, 2]}
             performance={{ min: 0.5 }}
           >
-            <Scene />
+            <Suspense fallback={<Loader />}>
+              <Scene texturePath={texturePath} />
+            </Suspense>
           </Canvas>
         </div>
       </div>

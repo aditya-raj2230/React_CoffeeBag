@@ -12,8 +12,8 @@ export function CoffeeOBJ(props) {
     const objLoader = new OBJLoader()
     const texLoader = new THREE.TextureLoader()
     
-    // Load texture first
-    const texture = texLoader.load('/Pack2.png')
+    // Use texturePath from props, with a fallback
+    const texture = texLoader.load(props.texturePath || '/Pack2.png')
     const material = new THREE.MeshStandardMaterial({
       map: texture,
       side: THREE.DoubleSide,
@@ -41,7 +41,7 @@ export function CoffeeOBJ(props) {
       texture.dispose()
       material.dispose()
     }
-  }, [])
+  }, [props.texturePath])
 
   // Animation with useFrame for better performance
   const rotationSpeed = 1.0 // Increased from 0.2 for more noticeable rotation

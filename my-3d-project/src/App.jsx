@@ -12,8 +12,25 @@ gsap.registerPlugin(ScrollTrigger)
 
 function App() {
   const [activeSection, setActiveSection] = useState(0)
+  const [isLoading, setIsLoading] = useState(true)
+  const [isTransitioning, setIsTransitioning] = useState(true)
 
   useEffect(() => {
+    // Handle loading state
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+      // Add a small delay before removing the transition screen completely
+      setTimeout(() => {
+        setIsTransitioning(false)
+      }, 600) // Matches the transition duration
+    }, 2000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  useEffect(() => {
+    if (isLoading) return // Skip Lenis initialization if still loading
+    
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -82,38 +99,54 @@ function App() {
       lenis.destroy()
       ScrollTrigger.getAll().forEach(trigger => trigger.kill())
     }
-  }, [])
+  }, [isLoading])
 
   return (
     <>
-      <div className="fixed right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
-        {[0, 1, 2, 3].map((dot, index) => (
-          <button
-            key={index}
-            onClick={() => {
-              document.querySelectorAll('.scroll-section')[index].scrollIntoView({ behavior: 'smooth' })
-            }}
-            className={`w-3 h-3 rounded-full transition-all duration-300 ${
-              activeSection === index ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
-            }`}
-          />
-        ))}
+      {/* Loading/Transition overlay */}
+      <div 
+        className={`fixed inset-0 z-50 bg-[#447783] flex items-center justify-center transition-opacity duration-600 ${
+          !isLoading ? 'opacity-0 pointer-events-none' : 'opacity-100'
+        } ${!isTransitioning ? 'hidden' : ''}`}
+      >
+        <div className="flex flex-col items-center gap-4">
+          <div className="w-12 h-12 border-4 border-white border-t-transparent rounded-full animate-spin"></div>
+          <p className="text-white text-lg">Loading...</p>
+        </div>
       </div>
 
-      <div className='min-h-screen w-full bg-[#447783] flex flex-col divide-y-8 divide-[#447783] overflow-x-hidden m-0 p-0' 
-        style={{ overflowY: 'clip' }}
-      >
-        <div className='px-4 pt-10 scroll-section'>
-          <Wholesale/>
+      {/* Main content */}
+      <div className={`${isTransitioning ? 'opacity-0' : 'opacity-100'} transition-opacity duration-300`}>
+        <div className="fixed right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-40">
+          {[0, 1, 2, 3].map((dot, index) => (
+            <button
+              key={index}
+              onClick={() => {
+                document.querySelectorAll('.scroll-section')[index].scrollIntoView({ behavior: 'smooth' })
+              }}
+              className={`w-3 h-3 rounded-full transition-all duration-300 ${
+                activeSection === index ? 'bg-white scale-125' : 'bg-white/50 hover:bg-white/75'
+              }`}
+            />
+          ))}
         </div>
-        <div className='px-4 py-10 scroll-section'>
-          <Product layout='left'/>
-        </div>
-        <div className='px-4 py-10 scroll-section'>
-          <Product layout='right'/>
-        </div>
-        <div className='px-4 pb-10 scroll-section'>
-          <Product layout='left'/>
+
+        <div className='min-h-screen w-full bg-[#447783] flex flex-col divide-y-8 divide-[#447783] overflow-x-hidden m-0 p-0' 
+          style={{ overflowY: 'clip' }}
+        >
+          <div className='px-4 pt-10 scroll-section'>
+            <Wholesale/>
+          </div>
+          <div className='px-4 py-10 scroll-section'>
+            <Product layout='left' texturePath='/Kercha.png'/>
+          </div>
+          <div className='px-4 py-10 scroll-section'>
+            <Product layout='right' texturePath='/Night Shift.png'/>
+          </div>
+          <div className='px-4 pb-10 scroll-section'>
+            <Product layout='left' texturePath='The Answer.png'/>
+          </div>
+         
         </div>
       </div>
     </>
